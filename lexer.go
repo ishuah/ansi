@@ -1,4 +1,4 @@
-package internals
+package ansi
 
 import (
 	"bytes"
@@ -7,13 +7,6 @@ import (
 
 // The Lexer implementation is entirely taken from Rob Pike's "Lexical Scanning
 // in Go" talk (https://www.youtube.com/watch?v=HxaD_trXwRE).
-func NewLexer(input []byte) *Lexer {
-	return &Lexer{
-		input: input,
-		items: make(chan Item, 2),
-		state: lexBytes,
-	}
-}
 
 type Lexer struct {
 	items     chan Item
@@ -22,6 +15,12 @@ type Lexer struct {
 	pos       int
 	itemStart int
 	state     stateFn
+}
+
+func (l *Lexer) Init(input []byte) {
+	l.input = input
+	l.items = make(chan Item, 2)
+	l.state = lexBytes
 }
 
 func (l *Lexer) Backup() {
