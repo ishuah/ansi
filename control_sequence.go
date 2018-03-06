@@ -3,15 +3,25 @@ package ansi
 import (
 	"bytes"
 	"errors"
+	"strconv"
 )
 
 var (
+	// ErrBadControlSequence is an error definition for malformed control
+	// sequences
 	ErrBadControlSequence = errors.New("malformed control sequence")
+
+	ControlSequenceIntroducer = byte('[')
+
+	SelectGraphicRendition = byte('m')
+	CursorPosition         = byte('H')
+	EraseInDisplay         = byte('J')
+	EraseInLine            = byte('K')
 )
 
 type SequenceData struct {
 	Prefix  byte
-	Params  [][]byte
+	Params  []int
 	Inters  []byte
 	Command byte
 }
@@ -33,9 +43,13 @@ func ParseControlSequence(v []byte) (*SequenceData, error) {
 	// Value of i marks the separation between (semicolon-separated) parameters
 	// and intermediate bytes. One catch: when no parameters are specified, we
 	// want to have [][]byte{} rather than [][]byte{[]byte{}}.
-	params := [][]byte{}
+	params := []int{}
 	if i >= 2 {
-		params = bytes.Split(v[2:i+1], []byte{';'})
+		paramBytes := bytes.Split(v[2:i+1], []byte{';'})
+		for _, param := range paramBytes {
+			val, _ := strconv.Atoi(string(param))
+			params = append(params, val)
+		}
 	}
 
 	return &SequenceData{
