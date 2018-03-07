@@ -17,6 +17,10 @@ var (
 	CursorPosition         = byte('H')
 	EraseInDisplay         = byte('J')
 	EraseInLine            = byte('K')
+	CursorUp               = byte('A')
+	CursorDown             = byte('B')
+	CursorForward          = byte('C')
+	CursorBack             = byte('D')
 )
 
 type SequenceData struct {
