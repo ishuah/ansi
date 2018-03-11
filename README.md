@@ -1,4 +1,5 @@
-ansi
-====
+# ansi
+[![Go Report Card](https://goreportcard.com/badge/github.com/ishuah/ansi)](https://goreportcard.com/report/github.com/ishuah/ansi)
 
-Golang library to handle ANSI escape sequences
+A Golang package for parsing ANSI escape sequences.
+
