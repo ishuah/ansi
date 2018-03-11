@@ -2,6 +2,7 @@ package ansi
 
 import (
 	"bytes"
+	"fmt"
 	"testing"
 )
 
@@ -14,7 +15,7 @@ func cmpControlSequence(t *testing.T, result, expected *SequenceData) {
 		t.Fatalf("Bad length for params array: got %d, expected %d", len(result.Params), len(expected.Params))
 	}
 	for i, param := range result.Params {
-		if exp := expected.Params[i]; bytes.Compare(param, exp) != 0 {
+		if exp := expected.Params[i]; param != exp {
 			t.Fatalf("Bad value for parameter %d: got %q, expected %q", i, param, exp)
 		}
 	}
@@ -29,7 +30,7 @@ func cmpControlSequence(t *testing.T, result, expected *SequenceData) {
 }
 
 func TestCompleteSequence(t *testing.T) {
-	b := []byte("\x1B[1;2<;3+m")
+	b := []byte("\x1B[1;2;3+m")
 	seq, err := ParseControlSequence(b)
 	if err != nil {
 		t.Fatal(err)
@@ -37,10 +38,11 @@ func TestCompleteSequence(t *testing.T) {
 
 	expected := &SequenceData{
 		Prefix:  '[',
-		Params:  [][]byte{[]byte("1"), []byte("2<"), []byte("3")},
+		Params:  []int{1, 2, 3},
 		Inters:  []byte("+"),
 		Command: 'm',
 	}
+	fmt.Println(seq.Params)
 	cmpControlSequence(t, seq, expected)
 }
 
