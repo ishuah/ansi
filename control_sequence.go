@@ -10,19 +10,27 @@ var (
 	// ErrBadControlSequence is an error definition for malformed control
 	// sequences
 	ErrBadControlSequence = errors.New("malformed control sequence")
-
+	// ControlSequenceIntroducer holds the ANSI control sequence introducer '['
 	ControlSequenceIntroducer = byte('[')
-
+	// SelectGraphicRendition holds the ANSI control sequence command 'm'
 	SelectGraphicRendition = byte('m')
-	CursorPosition         = byte('H')
-	EraseInDisplay         = byte('J')
-	EraseInLine            = byte('K')
-	CursorUp               = byte('A')
-	CursorDown             = byte('B')
-	CursorForward          = byte('C')
-	CursorBack             = byte('D')
+	// CursorPosition holds the ANSI control sequence command 'H'
+	CursorPosition = byte('H')
+	// EraseInDisplay holds the ANSI control sequence command 'J'
+	EraseInDisplay = byte('J')
+	// EraseInLine holds the ANSI control sequence command 'K'
+	EraseInLine = byte('K')
+	// CursorUp holds the ANSI control sequence command 'A'
+	CursorUp = byte('A')
+	// CursorDown holds the ANSI control sequence command 'B'
+	CursorDown = byte('B')
+	// CursorForward holds the ANSI control sequence command 'C'
+	CursorForward = byte('C')
+	// CursorBack holds the ANSI control sequence command 'D'
+	CursorBack = byte('D')
 )
 
+// SequenceData is a struct that describes a control sequence
 type SequenceData struct {
 	Prefix  byte
 	Params  []int
@@ -30,6 +38,7 @@ type SequenceData struct {
 	Command byte
 }
 
+// ParseControlSequence takes a slice of bytes as input and returns SequenceData and an error
 func ParseControlSequence(v []byte) (*SequenceData, error) {
 	// Immediatly reject any malformed control sequence: it must start with the
 	// escape character, and contain at least one prefix and command byte.

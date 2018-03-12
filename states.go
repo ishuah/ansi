@@ -29,7 +29,7 @@ func lexBytes(l *Lexer) stateFn {
 // Status function lexEscapeSequence lexes an sequence starting with the ESC
 // character code. It may be a CSI introduced sequence, or a two char sequence.
 func lexEscapeSequence(l *Lexer) stateFn {
-	l.pos += 1 // Drop the ESC byte
+	l.pos++ // Drop the ESC byte
 	next, _ := l.Peek()
 	if next == '[' {
 		return lexControlSequence
@@ -41,7 +41,7 @@ func lexEscapeSequence(l *Lexer) stateFn {
 
 // Status function lexTwoCharSequence.
 func lexTwoCharSequence(l *Lexer) stateFn {
-	l.pos += 1 // Eat up the command character
+	l.pos++ // Eat up the command character
 	l.Emit(TwoCharSequence)
 	return lexBytes
 }

@@ -2,7 +2,6 @@ package ansi
 
 import (
 	"bytes"
-	"fmt"
 	"testing"
 )
 
@@ -42,7 +41,6 @@ func TestCompleteSequence(t *testing.T) {
 		Inters:  []byte("+"),
 		Command: 'm',
 	}
-	fmt.Println(seq.Params)
 	cmpControlSequence(t, seq, expected)
 }
 
@@ -58,4 +56,12 @@ func TestMinimalSequence(t *testing.T) {
 		Command: 't',
 	}
 	cmpControlSequence(t, seq, expected)
+}
+
+func TestBadSequence(t *testing.T) {
+	b := []byte("[0m")
+	_, err := ParseControlSequence(b)
+	if err == nil {
+		t.Fatalf("Expecting %v error", ErrBadControlSequence)
+	}
 }

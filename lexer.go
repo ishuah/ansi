@@ -8,6 +8,7 @@ import (
 // The Lexer implementation is entirely taken from Rob Pike's "Lexical Scanning
 // in Go" talk (https://www.youtube.com/watch?v=HxaD_trXwRE).
 
+// Lexer implements reading and tokenizing bytes
 type Lexer struct {
 	items     chan Item
 	input     []byte
@@ -17,6 +18,7 @@ type Lexer struct {
 	state     stateFn
 }
 
+// Init initializes a Lexer with new input
 func (l *Lexer) Init(input []byte) {
 	l.input = input
 	l.items = make(chan Item, 2)
@@ -24,7 +26,7 @@ func (l *Lexer) Init(input []byte) {
 }
 
 func (l *Lexer) Backup() {
-	l.pos -= 1
+	l.pos--
 }
 
 func (l *Lexer) Cancel(revert stateFn) stateFn {
@@ -42,7 +44,7 @@ func (l *Lexer) Next() (byte, error) {
 		return 0, io.EOF
 	}
 	b := l.input[l.pos]
-	l.pos += 1
+	l.pos++
 	return b, nil
 }
 
