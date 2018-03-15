@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func cmpControlSequence(t *testing.T, result, expected *SequenceData) {
+func compareControlSequence(t *testing.T, result, expected *SequenceData) {
 	if result.Prefix != expected.Prefix {
 		t.Fatalf("Bad prefix for parsed control sequence: got %q, expected %q", result.Prefix, expected.Prefix)
 	}
@@ -41,7 +41,7 @@ func TestCompleteSequence(t *testing.T) {
 		Inters:  []byte("+"),
 		Command: 'm',
 	}
-	cmpControlSequence(t, seq, expected)
+	compareControlSequence(t, seq, expected)
 }
 
 func TestMinimalSequence(t *testing.T) {
@@ -55,7 +55,7 @@ func TestMinimalSequence(t *testing.T) {
 		Prefix:  '_',
 		Command: 't',
 	}
-	cmpControlSequence(t, seq, expected)
+	compareControlSequence(t, seq, expected)
 }
 
 func TestBadSequence(t *testing.T) {

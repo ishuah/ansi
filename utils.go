@@ -1,17 +1,18 @@
 package ansi
 
 const (
+	// EscapeCode holds the ANSI escape character '\x1B'
 	EscapeCode = '\x1B'
 )
 
-func IsParamChar(b byte) bool {
+func isParamChar(b byte) bool {
 	return b >= 0x30 && b <= 0x3F
 }
 
-func IsInterChar(b byte) bool {
+func isInterChar(b byte) bool {
 	return b >= 0x20 && b <= 0x2F
 }
 
-func IsCommandChar(b byte) bool {
+func isCommandChar(b byte) bool {
 	return b >= 0x40 && b <= 0x7E
 }

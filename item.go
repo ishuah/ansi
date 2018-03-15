@@ -1,5 +1,6 @@
 package ansi
 
+// ItemType defines the item class
 type ItemType int
 
 // Item models a lexer token. The value it hols is the raw slice of bytes
@@ -19,6 +20,7 @@ const (
 )
 
 var (
+	// ItemTypeName holds the string names for ItemType
 	ItemTypeName = []string{
 		"EOF",
 		"RawBytes",

@@ -50,7 +50,7 @@ func ParseControlSequence(v []byte) (*SequenceData, error) {
 	// need to determine where parameters end and intermediate char begin.
 	var i int
 	end := len(v) - 1
-	for i = end - 1; IsInterChar(v[i]); i-- {
+	for i = end - 1; isInterChar(v[i]); i-- {
 	}
 
 	// Value of i marks the separation between (semicolon-separated) parameters
